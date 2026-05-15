@@ -1,0 +1,6 @@
+[{
+  "modid": "no_particle",
+  "name": "no particle",
+  "version": "1.0",
+  "description": "Intercepts particles based on whitelist."
+}]

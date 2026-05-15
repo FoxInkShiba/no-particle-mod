@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        maven { url = "https://repo.spongepowered.org/maven-snapshots/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath "org.spongepowered:mixin:0.7.4-SNAPSHOT"
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '1.0'
+group = 'no.particle'
+archivesBaseName = 'no_particle'
+
+sourceCompatibility = targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20171003-1.12'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.debug.export', 'true'
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.minecraftforge.net/' }
+    maven { url = 'https://repo.spongepowered.org/maven' }
+    maven { url = "https://repo.spongepowered.org/maven-snapshots/" }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2864'
+    compile "org.spongepowered:mixin:0.7.4-SNAPSHOT"
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs)
+}
+
+jar {
+    manifest {
+        attributes(
+                "MixinConfigs": "mixins.no_particle.json",
+                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+                "TweakOrder": 0,
+                "FMLCorePluginContainsFMLMod": "true"
+        )
+    }
+}
+
+jar.finalizedBy('reobfJar')
