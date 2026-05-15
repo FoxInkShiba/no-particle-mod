@@ -1,53 +1,50 @@
--------------------------------------------
-Source installation information for modders
--------------------------------------------
-This code follows the Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
+一个轻量级 Minecraft Forge 模组，默认禁用所有粒子，仅允许用户指定的白名单粒子显示，并支持游戏内热重载配置。
 
-Note also that the patches are built against "unrenamed" MCP source code (aka
-srgnames) - this means that you will not be able to read them directly against
-normal code.
+🎯 主要功能
+默认拦截所有粒子：进入游戏后，任何粒子效果（火焰、烟雾、爆炸等）都不会显示。
 
-Source pack installation information:
+白名单机制：通过配置文件 particleinterceptor.cfg 自定义允许显示的粒子 ID（例如 minecraft:flame、minecraft:explosion）。
 
-Standalone source installation
-==============================
+热重载命令：输入 /again 即可重新加载白名单，无需重启游戏。
 
-See the Forge Documentation online for more detailed instructions:
-http://mcforge.readthedocs.io/en/latest/gettingstarted/
+性能优化：大幅减少不必要的粒子渲染，提升帧率，尤其适用于低配机器或大型整合包。
 
-Step 1: Open your command-line and browse to the folder where you extracted the zip file.
+⚙️ 技术特点
+基于 Mixin：在 ParticleManager.addEffect 方法前注入，直接取消非白名单粒子的添加，效率极高。
 
-Step 2: You're left with a choice.
-If you prefer to use Eclipse:
-1. Run the following command: "gradlew genEclipseRuns" (./gradlew genEclipseRuns if you are on Mac/Linux)
-2. Open Eclipse, Import > Existing Gradle Project > Select Folder 
-   or run "gradlew eclipse" to generate the project.
-(Current Issue)
-4. Open Project > Run/Debug Settings > Edit runClient and runServer > Environment
-5. Edit MOD_CLASSES to show [modid]%%[Path]; 2 times rather then the generated 4.
+客户端专用：仅影响客户端渲染，服务端无需安装。
 
-If you prefer to use IntelliJ:
-1. Open IDEA, and import project.
-2. Select your build.gradle file and have it import.
-3. Run the following command: "gradlew genIntellijRuns" (./gradlew genIntellijRuns if you are on Mac/Linux)
-4. Refresh the Gradle Project in IDEA if required.
+兼容 Forge 1.12.2：使用稳定映射和标准 API，兼容大多数主流模组。
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can run "gradlew --refresh-dependencies" to refresh the local cache. "gradlew clean" to reset everything {this does not affect your code} and then start the processs again.
+📦 使用方式
+将模组 JAR 放入 .minecraft/mods 文件夹。
 
-Should it still not work, 
-Refer to #ForgeGradle on EsperNet for more information about the gradle environment.
-or the Forge Project Discord discord.gg/UvedJ9m
+启动游戏，模组自动生成配置文件（.minecraft/config/particleinterceptor.cfg）。
 
-Forge source installation
-=========================
-MinecraftForge ships with this code and installs it as part of the forge
-installation process, no further action is required on your part.
+默认白名单为空，所有粒子被拦截。
 
-LexManos' Install Video
-=======================
-https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be
+编辑配置文件，按行添加粒子 ID（如 minecraft:flame）。
 
-For more details update more often refer to the Forge Forums:
-http://www.minecraftforge.net/forum/index.php/topic,14048.0.html
+在游戏中输入 /again 使新配置生效。
+
+🧪 示例配置
+properties
+particle {
+    S:whitelist <
+        minecraft:flame
+        minecraft:smoke
+        minecraft:explosion
+     >
+}
+🔗 开源许可
+采用 MIT License，源码托管于 GitHub，欢迎学习、修改和分发。
+
+📌 适用场景
+不喜欢大量粒子特效的玩家。
+
+需要提升帧率、减少视觉干扰的整合包。
+
+测试模组时临时禁用特定粒子。
+
+一句话总结：用白名单精准控制粒子显示，让游戏更清爽、更流畅。
+
