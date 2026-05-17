@@ -10,10 +10,9 @@ public class CommandParticleReload extends CommandBase {
     public String getName() { return "again"; }
     @Override
     public String getUsage(ICommandSender sender) { return "/again"; }
-
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         ParticleConfig.reload();
-        sender.sendMessage(new TextComponentString("Particle config reloaded. New particles will follow updated whitelist."));
+        sender.sendMessage(new TextComponentString("Particle config reloaded."));
     }
 }

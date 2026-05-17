@@ -1,9 +1,16 @@
 {
-  "required": true,
+  "required": false,
   "minVersion": "0.7.4",
   "package": "no.particle.mixin",
   "refmap": "mixins.no_particle.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
-  "mixins": ["ParticleManagerMixin"]
+  "mixins": [
+    "ParticleManagerMixin",
+    "NetHandlerPlayServerMixin",
+    "WorldServerMixin"
+  ],
+  "client": [
+    "WorldClientMixin"
+  ]
 }
